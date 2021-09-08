@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "dltonLL7sk/ZveCgJfuyBhEFU7BLYfj2w4Kxpvx6rMCOsfhzmPDqu0GbJyCipFwY1LUOIn5kbyXM206q7Wc5Ww==",
+  "success": true,
+  "projectFilePath": "/Users/alexandrecosta/Documents/dev/Turtle/Turtle/Turtle/Turtle.csproj",
+  "expectedPackageFiles": [
+    "/Users/alexandrecosta/.nuget/packages/stylecop.analyzers/1.1.118/stylecop.analyzers.1.1.118.nupkg.sha512"
+  ],
+  "logs": []
+}
