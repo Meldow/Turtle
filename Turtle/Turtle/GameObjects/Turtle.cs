@@ -20,13 +20,13 @@ namespace Turtle.GameObjects
                     this.Location = new Vector2(this.Location.X, this.Location.Y - 1);
                     break;
                 case DirectionEnum.East:
-                    this.Location = new Vector2(this.Location.X - 1, this.Location.Y);
+                    this.Location = new Vector2(this.Location.X + 1, this.Location.Y);
                     break;
                 case DirectionEnum.South:
                     this.Location = new Vector2(this.Location.X, this.Location.Y + 1);
                     break;
                 case DirectionEnum.West:
-                    this.Location = new Vector2(this.Location.X + 1, this.Location.Y);
+                    this.Location = new Vector2(this.Location.X - 1, this.Location.Y);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
