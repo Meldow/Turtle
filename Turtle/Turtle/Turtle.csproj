@@ -22,6 +22,7 @@
 
     <ItemGroup>
       <Compile Remove="Board.cs" />
+      <Compile Remove="TileType.cs" />
     </ItemGroup>
     
 </Project>

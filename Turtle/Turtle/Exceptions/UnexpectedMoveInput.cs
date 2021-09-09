@@ -1,7 +1,6 @@
 namespace Turtle.Exceptions
 {
     using System;
-    using Turtle.GameObjects;
 
     public class UnexpectedMoveInput : Exception
     {
