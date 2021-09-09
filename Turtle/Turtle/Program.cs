@@ -64,6 +64,7 @@
                         }
                         else if (obj is Exit)
                         {
+                            board.Escaped = true;
                             Console.WriteLine("Turtle escaped successfully!");
                             break;
                         }
@@ -76,6 +77,11 @@
                     {
                         throw new UnexpectedMoveInput("Unexpected move input, only 'm' and 'r' are acceptable.", readLine);
                     }
+                }
+
+                if (!board.Escaped)
+                {
+                    Console.WriteLine("Turtle did not manage to escape, still in danger!");
                 }
             }
             catch (OutOfBoardException exception)
@@ -90,8 +96,6 @@
             {
                 inputMoves.Close();
             }
-
-            Console.WriteLine("Turtle did not manage to escape, still in danger!");
         }
     }
 }

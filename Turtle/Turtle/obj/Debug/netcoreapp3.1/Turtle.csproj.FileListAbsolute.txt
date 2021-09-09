@@ -1,3 +1,5 @@
+/Users/alexandrecosta/Documents/dev/Turtle/Turtle/Turtle/bin/Debug/netcoreapp3.1/game-settings.in
+/Users/alexandrecosta/Documents/dev/Turtle/Turtle/Turtle/bin/Debug/netcoreapp3.1/moves.in
 /Users/alexandrecosta/Documents/dev/Turtle/Turtle/Turtle/bin/Debug/netcoreapp3.1/Turtle.deps.json
 /Users/alexandrecosta/Documents/dev/Turtle/Turtle/Turtle/bin/Debug/netcoreapp3.1/Turtle.runtimeconfig.json
 /Users/alexandrecosta/Documents/dev/Turtle/Turtle/Turtle/bin/Debug/netcoreapp3.1/Turtle.runtimeconfig.dev.json
@@ -11,5 +13,3 @@
 /Users/alexandrecosta/Documents/dev/Turtle/Turtle/Turtle/obj/Debug/netcoreapp3.1/Turtle.dll
 /Users/alexandrecosta/Documents/dev/Turtle/Turtle/Turtle/obj/Debug/netcoreapp3.1/Turtle.pdb
 /Users/alexandrecosta/Documents/dev/Turtle/Turtle/Turtle/obj/Debug/netcoreapp3.1/Turtle.genruntimeconfig.cache
-/Users/alexandrecosta/Documents/dev/Turtle/Turtle/Turtle/bin/Debug/netcoreapp3.1/game-settings.in
-/Users/alexandrecosta/Documents/dev/Turtle/Turtle/Turtle/bin/Debug/netcoreapp3.1/moves.in

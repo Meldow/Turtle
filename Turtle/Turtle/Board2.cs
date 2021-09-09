@@ -6,23 +6,23 @@ namespace Turtle
 
     public class Board2
     {
-        private IGameObject[,] Tiles { get; set; }
-
         public Turtle Turtle { get; set; }
+        public bool Escaped = false;
 
+        private readonly IGameObject[,] tiles;
         private readonly int xSize;
         private readonly int ySize;
 
         public Board2(int xSize, int ySize)
         {
-            this.Tiles = new IGameObject[xSize, ySize];
+            this.tiles = new IGameObject[xSize, ySize];
             this.xSize = xSize;
             this.ySize = ySize;
         }
 
         public void AddGameObject(IGameObject gameObject, int x, int y)
         {
-            this.Tiles[x, y] = gameObject;
+            this.tiles[x, y] = gameObject;
         }
 
         public IGameObject ValidateTurtleLocation()
@@ -37,13 +37,13 @@ namespace Turtle
                 throw new OutOfBoardException("Invalid move, the Turtle dropped out of the board.", this.Turtle.Location);
             }
 
-            return this.Tiles[this.Turtle.Location.X, this.Turtle.Location.Y];
+            return this.tiles[this.Turtle.Location.X, this.Turtle.Location.Y];
         }
 
         public override string ToString()
         {
             Console.WriteLine("Game board:");
-            Console.WriteLine($"{this.Tiles.Length}");
+            Console.WriteLine($"{this.tiles.Length}");
             return base.ToString();
         }
     }
