@@ -43,8 +43,8 @@
 
             inputGameSettings.Close();
 
-            var inputMoves = new StreamReader(args[1]);
             // Game Loop
+            var inputMoves = new StreamReader(args[1]);
             try
             {
                 while ((readLine = await inputMoves.ReadLineAsync()) != null)
@@ -54,11 +54,8 @@
                         board.Turtle.Move();
 
                         var obj = board.ValidateTurtleLocation();
-                        if (obj is null)
-                        {
-                            continue;
-                        }
-                        else if (obj is Mine)
+
+                        if (obj is Mine)
                         {
                             Console.WriteLine("Mine hit!");
                             break;
@@ -72,10 +69,11 @@
                     else if (readLine == "r")
                     {
                         board.Turtle.Rotate();
-                        continue;
                     }
-
-                    throw new UnexpectedMoveInput("Unexpected move input, only 'm' and 'r' are acceptable.", readLine);
+                    else
+                    {
+                        throw new UnexpectedMoveInput("Unexpected move input, only 'm' and 'r' are acceptable.", readLine);
+                    }
                 }
             }
             catch (OutOfBoardException exception)
