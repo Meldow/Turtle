@@ -25,12 +25,7 @@ namespace Turtle
             this.Tiles[x, y] = new Mine(x, y);
         }
 
-        public IGameObject GetObject(Vector2 location)
-        {
-            return this.Tiles[location.X, location.Y];
-        }
-
-        public void ValidateTurtleLocation()
+        public IGameObject ValidateTurtleLocation()
         {
             if (this.Turtle.Location.X < 0 || this.Turtle.Location.X > this.xSize)
             {
@@ -42,17 +37,7 @@ namespace Turtle
                 throw new OutOfBoardException("Invalid move, the Turtle dropped out of the board.", this.Turtle.Location);
             }
 
-            var newPositionGameObject = this.Tiles[this.Turtle.Location.X, this.Turtle.Location.Y];
-
-            if (newPositionGameObject == null)
-            {
-                return;
-            }
-
-            if (newPositionGameObject as Type == typeof(IMine))
-            {
-                Console.WriteLine("Mine hit!");
-            }
+            return this.Tiles[this.Turtle.Location.X, this.Turtle.Location.Y];
         }
 
         public override string ToString()

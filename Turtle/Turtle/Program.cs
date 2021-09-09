@@ -38,28 +38,47 @@
             // Game Loop
             try
             {
-                string move;
-                while ((move = await inputMoves.ReadLineAsync()) != null)
+                string input;
+                while ((input = await inputMoves.ReadLineAsync()) != null)
                 {
-                    var destination = board.GetObject(board.Turtle.Forward());
+                    if (input == "m")
+                    {
+                        board.Turtle.Move();
 
-                    // Move turtle to new location
-                    board.Turtle.Move();
+                        var obj = board.ValidateTurtleLocation();
+                        if (obj is null)
+                        {
+                            continue;
+                        }
+                        else if (obj is Mine)
+                        {
+                            Console.WriteLine("Mine hit!");
+                            break;
+                        }
+                    }
+                    else if (input == "r")
+                    {
+                        board.Turtle.Rotate();
+                        continue;
+                    }
 
-                    // Validate turtle location
-                    board.ValidateTurtleLocation();
+                    throw new UnexpectedMoveInput("Unexpected move input, only 'm' and 'r' are acceptable.", input);
                 }
             }
             catch (OutOfBoardException exception)
             {
                 Console.WriteLine($"{exception.Message} | Location: [{exception.Location.X},{exception.Location.Y}]");
             }
+            catch (UnexpectedMoveInput exception)
+            {
+                Console.WriteLine($"{exception.Message} | Input: '{exception.Input}'");
+            }
             finally
             {
                 inputMoves.Close();
             }
 
-            Console.WriteLine("Hello World!");
+            Console.WriteLine("Turtle did not manage to escape, still in danger!");
         }
     }
 }
