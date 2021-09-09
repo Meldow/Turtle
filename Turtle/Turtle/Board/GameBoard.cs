@@ -17,7 +17,7 @@ namespace Turtle.Board
             this.Tiles = new IGameObject[xSize + 1, ySize + 1]; // Add +1 to size to take into account 0 based arrays
         }
 
-        public void AddGameObject(IGameObject gameObject, int x, int y)
+        public void AddGameObject(IGameObject gameObject)
         {
             if (gameObject.Location.X < 0
                 || gameObject.Location.X > this.XSize
@@ -27,7 +27,7 @@ namespace Turtle.Board
                 throw new OutOfBoardException("Trying to add a GameObject out of the board.", gameObject.Location, gameObject);
             }
 
-            this.Tiles[x, y] = gameObject;
+            this.Tiles[gameObject.Location.X, gameObject.Location.Y] = gameObject;
         }
 
         public override string ToString()

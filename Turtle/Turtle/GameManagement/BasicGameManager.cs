@@ -22,46 +22,56 @@ namespace Turtle.GameManagement
 
         public async Task Setup(StreamReader inputGameSettings)
         {
-            var boardInput = await inputGameSettings.ReadLineAsync();
-            var boardSize = boardInput.Split(',');
+            var boardSize = (await inputGameSettings.ReadLineAsync())?.Split(',');
             this.gameBoard = new GameBoard(int.Parse(boardSize[0]), int.Parse(boardSize[1]));
 
-            var turtleLocationInput = await inputGameSettings.ReadLineAsync();
-            var turtleLocation = turtleLocationInput.Split(',');
-
+            var turtleLocation = (await inputGameSettings.ReadLineAsync())?.Split(',');
             this.turtle = new Turtle(int.Parse(turtleLocation[0]), int.Parse(turtleLocation[1]), turtleLocation[2]);
 
             string readLine;
-            while ((readLine = inputGameSettings.ReadLine()) != null)
+            while ((readLine = await inputGameSettings.ReadLineAsync()) != null)
             {
-                var input = readLine.Split(',');
-                var locX = int.Parse(input[1]);
-                var locY = int.Parse(input[2]);
-
-                if (input[0] == "m")
+                try
                 {
-                    try
+                    var input = readLine.Split(',');
+                    var locX = int.Parse(input[1]);
+                    var locY = int.Parse(input[2]);
+
+                    switch (input[0])
                     {
-                        this.gameBoard.AddGameObject(new Mine(locX, locY), locX, locY);
-                    }
-                    catch (OutOfBoardException exception)
-                    {
-                        Console.WriteLine(
-                            $"{exception.Message} Skipping this one. | Location: [{exception.Location.X},{exception.Location.Y}] , Object: [{exception.GameObject}]");
+                        case "m":
+                            try
+                            {
+                                this.gameBoard.AddGameObject(new Mine(new Vector2(locX, locY)));
+                            }
+                            catch (OutOfBoardException exception)
+                            {
+                                Console.WriteLine(
+                                    $"{exception.Message} Skipping this one. | Location: [{exception.Location.X},{exception.Location.Y}] , Object: [{exception.GameObject}]");
+                            }
+
+                            break;
+
+                        case "e":
+                            try
+                            {
+                                this.gameBoard.AddGameObject(new Exit(new Vector2(locX, locY)));
+                            }
+                            catch (OutOfBoardException exception)
+                            {
+                                Console.WriteLine(
+                                    $"{exception.Message} Skipping this one. | Location: [{exception.Location.X},{exception.Location.Y}] , Object: [{exception.GameObject}]");
+                            }
+
+                            break;
+
+                        default:
+                            throw new UnexpectedInputException("Unexpected object input, only 'm' and 'e' are acceptable.", readLine);
                     }
                 }
-
-                if (input[0] == "e")
+                catch (UnexpectedInputException exception)
                 {
-                    try
-                    {
-                        this.gameBoard.AddGameObject(new Exit(locX, locY), locX, locY);
-                    }
-                    catch (OutOfBoardException exception)
-                    {
-                        Console.WriteLine(
-                            $"{exception.Message} Skipping this one. | Location: [{exception.Location.X},{exception.Location.Y}] , Object: [{exception.GameObject}]");
-                    }
+                    Console.WriteLine($"{exception.Message} Skipping this one. | Input: [{exception.Input}]");
                 }
             }
 
@@ -98,7 +108,7 @@ namespace Turtle.GameManagement
                     }
                     else
                     {
-                        throw new UnexpectedMoveInput("Unexpected move input, only 'm' and 'r' are acceptable.", readLine);
+                        throw new UnexpectedInputException("Unexpected move input, only 'm' and 'r' are acceptable.", readLine);
                     }
                 }
             }
@@ -106,7 +116,7 @@ namespace Turtle.GameManagement
             {
                 Console.WriteLine($"{exception.Message} | Location: [{exception.Location.X},{exception.Location.Y}]");
             }
-            catch (UnexpectedMoveInput exception)
+            catch (UnexpectedInputException exception)
             {
                 Console.WriteLine($"{exception.Message} | Input: '{exception.Input}'");
             }

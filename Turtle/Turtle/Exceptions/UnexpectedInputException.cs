@@ -2,25 +2,25 @@ namespace Turtle.Exceptions
 {
     using System;
 
-    public class UnexpectedMoveInput : Exception
+    public class UnexpectedInputException : Exception
     {
         public string Input { get; }
 
-        public UnexpectedMoveInput()
+        public UnexpectedInputException()
         {
         }
 
-        public UnexpectedMoveInput(string message)
+        public UnexpectedInputException(string message)
             : base(message)
         {
         }
 
-        public UnexpectedMoveInput(string message, Exception inner)
+        public UnexpectedInputException(string message, Exception inner)
             : base(message, inner)
         {
         }
 
-        public UnexpectedMoveInput(string message, string input)
+        public UnexpectedInputException(string message, string input)
             : this(message)
         {
             this.Input = input;

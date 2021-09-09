@@ -24,6 +24,7 @@
       <Compile Remove="Board.cs" />
       <Compile Remove="TileType.cs" />
       <Compile Remove="GameObjects\DirectionEnum.cs" />
+      <Compile Remove="Exceptions\UnexpectedInputGameObject.cs" />
     </ItemGroup>
     
 </Project>

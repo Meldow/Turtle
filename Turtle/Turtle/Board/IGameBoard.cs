@@ -10,6 +10,6 @@ namespace Turtle.Board
 
         public IGameObject[,] Tiles { get; }
 
-        void AddGameObject(IGameObject gameObject, int x, int y);
+        void AddGameObject(IGameObject gameObject);
     }
 }
