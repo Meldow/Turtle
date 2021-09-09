@@ -29,10 +29,7 @@ namespace Turtle.GameManagement
             var turtleLocationInput = await inputGameSettings.ReadLineAsync();
             var turtleLocation = turtleLocationInput.Split(',');
 
-            this.turtle = new Turtle(
-                int.Parse(turtleLocation[0]),
-                int.Parse(turtleLocation[1]),
-                Enum.Parse<DirectionEnum>(turtleLocation[2]));
+            this.turtle = new Turtle(int.Parse(turtleLocation[0]), int.Parse(turtleLocation[1]), turtleLocation[2]);
 
             string readLine;
             while ((readLine = inputGameSettings.ReadLine()) != null)

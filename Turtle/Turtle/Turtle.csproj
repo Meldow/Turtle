@@ -23,6 +23,7 @@
     <ItemGroup>
       <Compile Remove="Board.cs" />
       <Compile Remove="TileType.cs" />
+      <Compile Remove="GameObjects\DirectionEnum.cs" />
     </ItemGroup>
     
 </Project>

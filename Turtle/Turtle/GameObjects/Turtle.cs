@@ -6,11 +6,17 @@ namespace Turtle.GameObjects
     {
         private DirectionEnum direction;
 
-        public Turtle(int x, int y, DirectionEnum direction)
-            : base(x, y)
+        private enum DirectionEnum
         {
-            this.direction = direction;
+            North,
+            East,
+            South,
+            West,
         }
+
+        public Turtle(int x, int y, string direction)
+            : base(x, y)
+            => this.direction = Enum.Parse<DirectionEnum>(direction);
 
         public void Move()
         {
