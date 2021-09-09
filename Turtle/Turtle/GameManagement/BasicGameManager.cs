@@ -24,9 +24,7 @@ namespace Turtle.GameManagement
         {
             var boardInput = await inputGameSettings.ReadLineAsync();
             var boardSize = boardInput.Split(',');
-            this.gameBoard = new GameBoard(
-                int.Parse(boardSize[0]) + 1,
-                int.Parse(boardSize[1]) + 1); // Add +1 to size to take into account 0 based arrays
+            this.gameBoard = new GameBoard(int.Parse(boardSize[0]), int.Parse(boardSize[1]));
 
             var turtleLocationInput = await inputGameSettings.ReadLineAsync();
             var turtleLocation = turtleLocationInput.Split(',');
@@ -45,12 +43,28 @@ namespace Turtle.GameManagement
 
                 if (input[0] == "m")
                 {
-                    this.gameBoard.AddGameObject(new Mine(locX, locY), locX, locY);
+                    try
+                    {
+                        this.gameBoard.AddGameObject(new Mine(locX, locY), locX, locY);
+                    }
+                    catch (OutOfBoardException exception)
+                    {
+                        Console.WriteLine(
+                            $"{exception.Message} Skipping this one. | Location: [{exception.Location.X},{exception.Location.Y}] , Object: [{exception.GameObject}]");
+                    }
                 }
 
                 if (input[0] == "e")
                 {
-                    this.gameBoard.AddGameObject(new Exit(locX, locY), locX, locY);
+                    try
+                    {
+                        this.gameBoard.AddGameObject(new Exit(locX, locY), locX, locY);
+                    }
+                    catch (OutOfBoardException exception)
+                    {
+                        Console.WriteLine(
+                            $"{exception.Message} Skipping this one. | Location: [{exception.Location.X},{exception.Location.Y}] , Object: [{exception.GameObject}]");
+                    }
                 }
             }
 
@@ -122,12 +136,10 @@ namespace Turtle.GameManagement
 
         private static IGameObject ValidateTurtleLocation(Turtle turtle, IGameBoard gameBoard)
         {
-            if (turtle.Location.X < 0 || turtle.Location.X > gameBoard.XSize)
-            {
-                throw new OutOfBoardException("Invalid move, the Turtle dropped out of the board.", turtle.Location);
-            }
-
-            if (turtle.Location.Y < 0 || turtle.Location.Y > gameBoard.YSize)
+            if (turtle.Location.X < 0
+                || turtle.Location.X > gameBoard.XSize
+                || turtle.Location.Y < 0
+                || turtle.Location.Y > gameBoard.YSize)
             {
                 throw new OutOfBoardException("Invalid move, the Turtle dropped out of the board.", turtle.Location);
             }
