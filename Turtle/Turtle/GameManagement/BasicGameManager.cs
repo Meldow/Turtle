@@ -10,7 +10,7 @@ namespace Turtle.GameManagement
     public class BasicGameManager : IGameManager
     {
         private IGameBoard gameBoard;
-        private Turtle turtle;
+        private ITurtle turtle;
         private State gameStatus = State.Running;
 
         private enum State
@@ -131,7 +131,7 @@ namespace Turtle.GameManagement
             }
         }
 
-        private static IGameObject ValidateTurtleLocation(Turtle turtle, IGameBoard gameBoard)
+        private static IGameObject ValidateTurtleLocation(ITurtle turtle, IGameBoard gameBoard)
         {
             if (turtle.Location.X < 0
                 || turtle.Location.X > gameBoard.XSize

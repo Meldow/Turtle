@@ -2,7 +2,7 @@ namespace Turtle.GameObjects
 {
     using System;
 
-    public class Turtle : GameObject
+    public class Turtle : GameObject, ITurtle
     {
         private DirectionEnum direction;
 
