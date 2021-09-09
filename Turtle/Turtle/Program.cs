@@ -10,52 +10,23 @@
     {
         public static async Task Main(string[] args)
         {
-            // Board setup
-            var inputGameSettings = new StreamReader(args[0]);
+            var gameBoard = await Setup(new StreamReader(args[0]));
 
-            var boardInput = await inputGameSettings.ReadLineAsync();
-            var boardSize = boardInput.Split(',');
-            var board = new Board2(int.Parse(boardSize[0]), int.Parse(boardSize[1]));
+            await GameLoop(new StreamReader(args[1]), gameBoard);
+        }
 
-            var turtleLocationInput = await inputGameSettings.ReadLineAsync();
-            var turtleLocation = turtleLocationInput.Split(',');
-
-            board.Turtle = new Turtle(
-                int.Parse(turtleLocation[0]),
-                int.Parse(turtleLocation[1]),
-                Enum.Parse<DirectionEnum>(turtleLocation[2]));
-
-            string readLine;
-            while ((readLine = inputGameSettings.ReadLine()) != null)
-            {
-                var input = readLine.Split(',');
-                var locX = int.Parse(input[1]);
-                var locY = int.Parse(input[2]);
-
-                if (input[0] == "m")
-                {
-                    board.AddGameObject(new Mine(locX, locY), locX, locY);
-                }
-
-                if (input[0] == "e")
-                {
-                    board.AddGameObject(new Exit(locX, locY), locX, locY);
-                }
-            }
-
-            inputGameSettings.Close();
-
-            // Game Loop
-            var inputMoves = new StreamReader(args[1]);
+        private static async Task GameLoop(StreamReader inputMoves, GameBoard gameBoard)
+        {
             try
             {
+                string readLine;
                 while ((readLine = await inputMoves.ReadLineAsync()) != null)
                 {
                     if (readLine == "m")
                     {
-                        board.Turtle.Move();
+                        gameBoard.Turtle.Move();
 
-                        var obj = board.ValidateTurtleLocation();
+                        var obj = gameBoard.ValidateTurtleLocation();
 
                         if (obj is Mine)
                         {
@@ -64,14 +35,14 @@
                         }
                         else if (obj is Exit)
                         {
-                            board.Escaped = true;
+                            gameBoard.Escaped = true;
                             Console.WriteLine("Turtle escaped successfully!");
                             break;
                         }
                     }
                     else if (readLine == "r")
                     {
-                        board.Turtle.Rotate();
+                        gameBoard.Turtle.Rotate();
                     }
                     else
                     {
@@ -79,7 +50,7 @@
                     }
                 }
 
-                if (!board.Escaped)
+                if (!gameBoard.Escaped)
                 {
                     Console.WriteLine("Turtle did not manage to escape, still in danger!");
                 }
@@ -96,6 +67,42 @@
             {
                 inputMoves.Close();
             }
+        }
+
+        private static async Task<GameBoard> Setup(StreamReader inputGameSettings)
+        {
+            var boardInput = await inputGameSettings.ReadLineAsync();
+            var boardSize = boardInput.Split(',');
+            var gameBoard = new GameBoard(int.Parse(boardSize[0]), int.Parse(boardSize[1]));
+
+            var turtleLocationInput = await inputGameSettings.ReadLineAsync();
+            var turtleLocation = turtleLocationInput.Split(',');
+
+            gameBoard.Turtle = new Turtle(
+                int.Parse(turtleLocation[0]),
+                int.Parse(turtleLocation[1]),
+                Enum.Parse<DirectionEnum>(turtleLocation[2]));
+
+            string readLine;
+            while ((readLine = inputGameSettings.ReadLine()) != null)
+            {
+                var input = readLine.Split(',');
+                var locX = int.Parse(input[1]);
+                var locY = int.Parse(input[2]);
+
+                if (input[0] == "m")
+                {
+                    gameBoard.AddGameObject(new Mine(locX, locY), locX, locY);
+                }
+
+                if (input[0] == "e")
+                {
+                    gameBoard.AddGameObject(new Exit(locX, locY), locX, locY);
+                }
+            }
+
+            inputGameSettings.Close();
+            return gameBoard;
         }
     }
 }
