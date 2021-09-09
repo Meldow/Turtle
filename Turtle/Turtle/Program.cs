@@ -3,6 +3,8 @@
     using System;
     using System.IO;
     using System.Threading.Tasks;
+    using Turtle.Exceptions;
+    using Turtle.GameObjects;
 
     class Program
     {
@@ -32,20 +34,30 @@
 
             inputFileGameSettings.Close();
 
-            // Game Loop
             var inputMoves = new StreamReader(args[1]);
-
-            string move;
-            while ((move = await inputMoves.ReadLineAsync()) != null)
+            // Game Loop
+            try
             {
-                // Validate if move is possible
-                    
-                // Validate collision
+                string move;
+                while ((move = await inputMoves.ReadLineAsync()) != null)
+                {
+                    var destination = board.GetObject(board.Turtle.Forward());
 
-                // Move turtle to new location
+                    // Move turtle to new location
+                    board.Turtle.Move();
+
+                    // Validate turtle location
+                    board.ValidateTurtleLocation();
+                }
             }
-
-            inputMoves.Close();
+            catch (OutOfBoardException exception)
+            {
+                Console.WriteLine($"{exception.Message} | Location: [{exception.Location.X},{exception.Location.Y}]");
+            }
+            finally
+            {
+                inputMoves.Close();
+            }
 
             Console.WriteLine("Hello World!");
         }

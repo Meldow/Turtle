@@ -1,10 +1,8 @@
-namespace Turtle
+namespace Turtle.GameObjects
 {
     public interface IGameObject
     {
-        public int X { get; set; }
-
-        public int Y { get; set; }
+        public IVector2 Location { get; set; }
 
         void SetLocation(int x, int y);
     }
