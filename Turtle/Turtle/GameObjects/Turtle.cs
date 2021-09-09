@@ -4,17 +4,17 @@ namespace Turtle.GameObjects
 
     public class Turtle : GameObject
     {
-        public DirectionEnum Direction;
+        private DirectionEnum direction;
 
         public Turtle(int x, int y, DirectionEnum direction)
             : base(x, y)
         {
-            this.Direction = direction;
+            this.direction = direction;
         }
 
         public void Move()
         {
-            switch (Direction)
+            switch (this.direction)
             {
                 case DirectionEnum.North:
                     this.Location = new Vector2(this.Location.X, this.Location.Y - 1);
@@ -33,38 +33,21 @@ namespace Turtle.GameObjects
             }
         }
 
-        public Vector2 Forward()
-        {
-            switch (Direction)
-            {
-                case DirectionEnum.North:
-                    return new Vector2(this.Location.X, this.Location.Y + 1);
-                case DirectionEnum.East:
-                    return new Vector2(this.Location.X + 1, this.Location.Y);
-                case DirectionEnum.South:
-                    return new Vector2(this.Location.X, this.Location.Y - 1);
-                case DirectionEnum.West:
-                    return new Vector2(this.Location.X - 1, this.Location.Y);
-                default:
-                    throw new ArgumentOutOfRangeException();
-            }
-        }
-
         public void Rotate()
         {
-            switch (this.Direction)
+            switch (this.direction)
             {
                 case DirectionEnum.North:
-                    this.Direction = DirectionEnum.East;
+                    this.direction = DirectionEnum.East;
                     break;
                 case DirectionEnum.East:
-                    this.Direction = DirectionEnum.South;
+                    this.direction = DirectionEnum.South;
                     break;
                 case DirectionEnum.South:
-                    this.Direction = DirectionEnum.West;
+                    this.direction = DirectionEnum.West;
                     break;
                 case DirectionEnum.West:
-                    this.Direction = DirectionEnum.North;
+                    this.direction = DirectionEnum.North;
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();

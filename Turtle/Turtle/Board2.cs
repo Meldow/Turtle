@@ -6,12 +6,12 @@ namespace Turtle
 
     public class Board2
     {
-        public IGameObject[,] Tiles { get; set; }
+        private IGameObject[,] Tiles { get; set; }
 
         public Turtle Turtle { get; set; }
 
-        private int xSize;
-        private int ySize;
+        private readonly int xSize;
+        private readonly int ySize;
 
         public Board2(int xSize, int ySize)
         {
@@ -20,14 +20,9 @@ namespace Turtle
             this.ySize = ySize;
         }
 
-        public void AddMine(int x, int y)
+        public void AddGameObject(IGameObject gameObject, int x, int y)
         {
-            this.Tiles[x, y] = new Mine(x, y);
-        }
-
-        public void AddExit(int x, int y)
-        {
-            this.Tiles[x, y] = new Exit(x, y);
+            this.Tiles[x, y] = gameObject;
         }
 
         public IGameObject ValidateTurtleLocation()

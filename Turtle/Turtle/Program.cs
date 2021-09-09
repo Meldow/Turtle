@@ -29,15 +29,17 @@
             while ((readLine = inputGameSettings.ReadLine()) != null)
             {
                 var input = readLine.Split(',');
+                var locX = int.Parse(input[1]);
+                var locY = int.Parse(input[2]);
 
                 if (input[0] == "m")
                 {
-                    board.AddMine(int.Parse(input[1]), int.Parse(input[2]));
+                    board.AddGameObject(new Mine(locX, locY), locX, locY);
                 }
 
                 if (input[0] == "e")
                 {
-                    board.AddExit(int.Parse(input[1]), int.Parse(input[2]));
+                    board.AddGameObject(new Exit(locX, locY), locX, locY);
                 }
             }
 
