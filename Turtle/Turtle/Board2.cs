@@ -24,6 +24,11 @@ namespace Turtle
         {
             this.Tiles[x, y] = new Mine(x, y);
         }
+        
+        public void AddExit(int x, int y)
+        {
+            this.Tiles[x, y] = new Exit(x, y);
+        }
 
         public IGameObject ValidateTurtleLocation()
         {

@@ -11,13 +11,13 @@
         public static async Task Main(string[] args)
         {
             // Board setup
-            var inputFileGameSettings = new StreamReader(args[0]);
+            var inputGameSettings = new StreamReader(args[0]);
 
-            var boardInput = await inputFileGameSettings.ReadLineAsync();
+            var boardInput = await inputGameSettings.ReadLineAsync();
             var boardSize = boardInput.Split(',');
             var board = new Board2(int.Parse(boardSize[0]), int.Parse(boardSize[1]));
 
-            var turtleLocationInput = await inputFileGameSettings.ReadLineAsync();
+            var turtleLocationInput = await inputGameSettings.ReadLineAsync();
             var turtleLocation = turtleLocationInput.Split(',');
 
             board.Turtle = new Turtle(
@@ -25,23 +25,31 @@
                 int.Parse(turtleLocation[1]),
                 Enum.Parse<DirectionEnum>(turtleLocation[2]));
 
-            string mine;
-            while ((mine = inputFileGameSettings.ReadLine()) != null)
+            string readLine;
+            while ((readLine = inputGameSettings.ReadLine()) != null)
             {
-                var mineLocation = mine.Split(',');
-                board.AddMine(int.Parse(mineLocation[0]), int.Parse(mineLocation[1]));
+                var input = readLine.Split(',');
+
+                if (input[0] == "m")
+                {
+                    board.AddMine(int.Parse(input[1]), int.Parse(input[2]));
+                }
+
+                if (input[0] == "e")
+                {
+                    board.AddExit(int.Parse(input[1]), int.Parse(input[2]));
+                }
             }
 
-            inputFileGameSettings.Close();
+            inputGameSettings.Close();
 
             var inputMoves = new StreamReader(args[1]);
             // Game Loop
             try
             {
-                string input;
-                while ((input = await inputMoves.ReadLineAsync()) != null)
+                while ((readLine = await inputMoves.ReadLineAsync()) != null)
                 {
-                    if (input == "m")
+                    if (readLine == "m")
                     {
                         board.Turtle.Move();
 
@@ -55,14 +63,19 @@
                             Console.WriteLine("Mine hit!");
                             break;
                         }
+                        else if (obj is Exit)
+                        {
+                            Console.WriteLine("Turtle escaped successfully!");
+                            break;
+                        }
                     }
-                    else if (input == "r")
+                    else if (readLine == "r")
                     {
                         board.Turtle.Rotate();
                         continue;
                     }
 
-                    throw new UnexpectedMoveInput("Unexpected move input, only 'm' and 'r' are acceptable.", input);
+                    throw new UnexpectedMoveInput("Unexpected move input, only 'm' and 'r' are acceptable.", readLine);
                 }
             }
             catch (OutOfBoardException exception)
