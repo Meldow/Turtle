@@ -5,5 +5,7 @@ namespace Turtle.GameObjects
         void Move();
 
         void Rotate();
+
+        void Rotate(DirectionEnum direction);
     }
 }
