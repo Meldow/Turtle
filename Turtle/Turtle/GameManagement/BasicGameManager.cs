@@ -129,18 +129,5 @@ namespace Turtle.GameManagement
                     throw new ArgumentOutOfRangeException();
             }
         }
-
-        private static IGameObject ValidateTurtleLocation(ITurtle turtle, IGameBoard gameBoard)
-        {
-            if (turtle.Location.X < 0
-                || turtle.Location.X > gameBoard.XSize
-                || turtle.Location.Y < 0
-                || turtle.Location.Y > gameBoard.YSize)
-            {
-                throw new OutOfBoardException("Invalid move, the Turtle dropped out of the board.", turtle.Location);
-            }
-
-            return gameBoard.Tiles[turtle.Location.X, turtle.Location.Y];
-        }
     }
 }
