@@ -20,14 +20,12 @@ namespace Turtle.GameManagement
             HitMine,
         }
 
-        public virtual async Task Setup(StreamReader inputGameSettings)
+        public abstract Task Setup(StreamReader inputGameSettings);
+
+        public abstract Task GameLoop(StreamReader inputMoves);
+
+        protected virtual async Task PopulateBoardFromGameSettings(StreamReader inputGameSettings)
         {
-            var boardSize = (await inputGameSettings.ReadLineAsync())?.Split(',');
-            this.GameBoard = new GameBoard(int.Parse(boardSize[0]), int.Parse(boardSize[1]));
-
-            var turtleLocation = (await inputGameSettings.ReadLineAsync())?.Split(',');
-            this.Turtle = new Turtle(int.Parse(turtleLocation[0]), int.Parse(turtleLocation[1]), turtleLocation[2]);
-
             string readLine;
             while ((readLine = await inputGameSettings.ReadLineAsync()) != null)
             {
@@ -74,11 +72,19 @@ namespace Turtle.GameManagement
                     Console.WriteLine($"{exception.Message} Skipping this one. | Input: [{exception.Input}]");
                 }
             }
-
-            inputGameSettings.Close();
         }
 
-        public abstract Task GameLoop(StreamReader inputMoves);
+        protected async Task CreateTurtle(StreamReader inputGameSettings)
+        {
+            var turtleLocation = (await inputGameSettings.ReadLineAsync())?.Split(',');
+            this.Turtle = new Turtle(int.Parse(turtleLocation[0]), int.Parse(turtleLocation[1]), turtleLocation[2]);
+        }
+
+        protected async Task CreateGameBoard(StreamReader inputGameSettings)
+        {
+            var boardSize = (await inputGameSettings.ReadLineAsync())?.Split(',');
+            this.GameBoard = new GameBoard(int.Parse(boardSize[0]), int.Parse(boardSize[1]));
+        }
 
         protected static IGameObject ValidateTurtleLocation(ITurtle turtle, IGameBoard gameBoard)
         {

@@ -1,6 +1,7 @@
 namespace Turtle.Board
 {
     using System;
+    using System.Collections.Generic;
     using Turtle.Exceptions;
     using Turtle.GameObjects;
 
@@ -28,6 +29,38 @@ namespace Turtle.Board
             }
 
             this.Tiles[gameObject.Location.X, gameObject.Location.Y] = gameObject;
+        }
+
+        public IVector2 GetEmptyTile(IVector2 excludedVector = null)
+        {
+            var rnd = new Random();
+
+            while (true)
+            {
+                var rndXLocation = rnd.Next(0, this.XSize);
+                var rndYLocation = rnd.Next(0, this.YSize);
+
+                if (excludedVector != null)
+                {
+                    if (rndXLocation == excludedVector.X && rndYLocation == excludedVector.Y)
+                    {
+                        continue;
+                    }
+                }
+
+                var randomTile = this.Tiles[rndXLocation, rndYLocation];
+                if (randomTile is Empty)
+                {
+                    return randomTile.Location;
+                }
+
+                if (randomTile is null)
+                {
+                    return new Vector2(rndXLocation, rndYLocation);
+                }
+
+                Console.WriteLine($"Looking for random empty location...");
+            }
         }
 
         public override string ToString()

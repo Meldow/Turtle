@@ -1,5 +1,6 @@
 namespace Turtle.Board
 {
+    using System.Collections.Generic;
     using Turtle.GameObjects;
 
     public interface IGameBoard
@@ -11,5 +12,7 @@ namespace Turtle.Board
         public IGameObject[,] Tiles { get; }
 
         void AddGameObject(IGameObject gameObject);
+
+        IVector2 GetEmptyTile(IVector2 excludedVector = null);
     }
 }

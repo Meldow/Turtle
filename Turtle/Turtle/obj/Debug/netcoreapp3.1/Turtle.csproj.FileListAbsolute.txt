@@ -13,3 +13,4 @@
 /Users/alexandrecosta/Documents/dev/Turtle/Turtle/Turtle/obj/Debug/netcoreapp3.1/Turtle.dll
 /Users/alexandrecosta/Documents/dev/Turtle/Turtle/Turtle/obj/Debug/netcoreapp3.1/Turtle.pdb
 /Users/alexandrecosta/Documents/dev/Turtle/Turtle/Turtle/obj/Debug/netcoreapp3.1/Turtle.genruntimeconfig.cache
+/Users/alexandrecosta/Documents/dev/Turtle/Turtle/Turtle/bin/Debug/netcoreapp3.1/playable-game-settings.in

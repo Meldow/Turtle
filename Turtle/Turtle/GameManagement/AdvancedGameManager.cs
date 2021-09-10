@@ -5,6 +5,7 @@ namespace Turtle.GameManagement
     using System.Text;
     using System.Threading;
     using System.Threading.Tasks;
+    using Turtle.Board;
     using Turtle.Exceptions;
     using Turtle.GameObjects;
 
@@ -12,15 +13,10 @@ namespace Turtle.GameManagement
     {
         public override async Task Setup(StreamReader inputGameSettings)
         {
-            await base.Setup(inputGameSettings);
-
-            for (var x = 0; x <= this.GameBoard.XSize; x++)
-            {
-                for (var y = 0; y <= this.GameBoard.YSize; y++)
-                {
-                    this.GameBoard.Tiles[x, y] ??= new Empty(x, y);
-                }
-            }
+            await this.CreateGameBoard(inputGameSettings);
+            await this.CreateTurtle(inputGameSettings);
+            await this.PopulateBoardFromGameSettings(inputGameSettings);
+            AddEmptyTiles(this.GameBoard);
         }
 
         public override async Task GameLoop(StreamReader inputMoves)
@@ -112,6 +108,17 @@ namespace Turtle.GameManagement
             }
 
             Console.WriteLine(strBuilder);
+        }
+
+        private static void AddEmptyTiles(IGameBoard gameBoard)
+        {
+            for (var x = 0; x <= gameBoard.XSize; x++)
+            {
+                for (var y = 0; y <= gameBoard.YSize; y++)
+                {
+                    gameBoard.Tiles[x, y] ??= new Empty(x, y);
+                }
+            }
         }
     }
 }

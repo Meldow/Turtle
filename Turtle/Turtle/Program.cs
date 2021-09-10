@@ -12,9 +12,13 @@
             //var gameManager = new AdvancedGameManager();
             var gameManager = new PlayableGameManager();
 
-            await gameManager.Setup(new StreamReader(args[0]));
+            var gameSettingsStreamReader = new StreamReader(args[0]);
+            await gameManager.Setup(gameSettingsStreamReader);
+            gameSettingsStreamReader.Close();
 
-            await gameManager.GameLoop(new StreamReader(args[1]));
+            var movesStreamReader = new StreamReader(args[1]);
+            await gameManager.GameLoop(movesStreamReader);
+            movesStreamReader.Close();
         }
     }
 }

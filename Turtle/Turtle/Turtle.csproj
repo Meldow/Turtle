@@ -13,6 +13,9 @@
     </ItemGroup>
 
     <ItemGroup>
+        <Content Include="playable-game-settings.in">
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </Content>
         <Content Include="game-settings.in">
             <CopyToOutputDirectory>Always</CopyToOutputDirectory>
         </Content><Content Include="moves.in">

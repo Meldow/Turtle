@@ -11,7 +11,9 @@ namespace Turtle.GameManagement
     {
         public override async Task Setup(StreamReader inputGameSettings)
         {
-            await base.Setup(inputGameSettings);
+            await this.CreateGameBoard(inputGameSettings);
+            await this.CreateTurtle(inputGameSettings);
+            await this.PopulateBoardFromGameSettings(inputGameSettings);
 
             for (var x = 0; x <= this.GameBoard.XSize; x++)
             {
@@ -98,6 +100,46 @@ namespace Turtle.GameManagement
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
+            }
+        }
+
+        protected override async Task PopulateBoardFromGameSettings(StreamReader inputGameSettings)
+        {
+            string readLine;
+            while ((readLine = await inputGameSettings.ReadLineAsync()) != null)
+            {
+                try
+                {
+                    var input = readLine.Split(',');
+
+                    switch (input[0])
+                    {
+                        case "m":
+                            for (var i = 0; i < int.Parse(input[1]); i++)
+                            {
+                                var emptyTile = this.GameBoard.GetEmptyTile(this.Turtle.Location);
+                                this.GameBoard.AddGameObject(new Mine(emptyTile));
+                            }
+
+                            break;
+
+                        case "e":
+                            for (var i = 0; i < int.Parse(input[1]); i++)
+                            {
+                                var emptyTile = this.GameBoard.GetEmptyTile(this.Turtle.Location);
+                                this.GameBoard.AddGameObject(new Exit(emptyTile));
+                            }
+
+                            break;
+
+                        default:
+                            throw new UnexpectedInputException("Unexpected object input, only 'm' and 'e' are acceptable.", readLine);
+                    }
+                }
+                catch (UnexpectedInputException exception)
+                {
+                    Console.WriteLine($"{exception.Message} Skipping this one. | Input: [{exception.Input}]");
+                }
             }
         }
 
