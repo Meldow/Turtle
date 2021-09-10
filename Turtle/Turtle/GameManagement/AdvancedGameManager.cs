@@ -16,10 +16,7 @@ namespace Turtle.GameManagement
             {
                 for (var y = 0; y <= this.GameBoard.YSize; y++)
                 {
-                    if (this.GameBoard.Tiles[x, y] is null)
-                    {
-                        this.GameBoard.Tiles[x, y] = new Empty(x, y);
-                    }
+                    this.GameBoard.Tiles[x, y] ??= new Empty(x, y);
                 }
             }
         }
@@ -28,13 +25,22 @@ namespace Turtle.GameManagement
         {
             // Draw Loop
             Console.Clear();
+
+            // Generate Board
             var strBuilder = new StringBuilder();
 
             for (var y = 0; y <= this.GameBoard.YSize; y++)
             {
                 for (var x = 0; x <= this.GameBoard.XSize; x++)
                 {
-                    strBuilder.Append(this.GameBoard.Tiles[x, y].DrawCharacter());
+                    if (this.Turtle.Location.X == x && this.Turtle.Location.Y == y)
+                    {
+                        strBuilder.Append(this.Turtle.DrawCharacter());
+                    }
+                    else
+                    {
+                        strBuilder.Append(this.GameBoard.Tiles[x, y].DrawCharacter());
+                    }
                 }
 
                 strBuilder.Append('\n');
