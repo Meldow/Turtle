@@ -8,7 +8,8 @@
     {
         public static async Task Main(string[] args)
         {
-            var gameManager = new BasicGameManager();
+            //var gameManager = new BasicGameManager();
+            var gameManager = new AdvancedGameManager();
 
             await gameManager.Setup(new StreamReader(args[0]));
 

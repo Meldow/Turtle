@@ -59,5 +59,11 @@ namespace Turtle.GameObjects
                     throw new ArgumentOutOfRangeException();
             }
         }
+
+
+        public override char DrawCharacter()
+        {
+            return 'T';
+        }
     }
 }

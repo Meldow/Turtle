@@ -6,5 +6,10 @@ namespace Turtle.GameObjects
             : base(location)
         {
         }
+
+        public override char DrawCharacter()
+        {
+            return 'M';
+        }
     }
 }

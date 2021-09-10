@@ -7,26 +7,15 @@ namespace Turtle.GameManagement
     using Turtle.Exceptions;
     using Turtle.GameObjects;
 
-    public class BasicGameManager : IGameManager
+    public class BasicGameManager : GameManager
     {
-        private IGameBoard gameBoard;
-        private ITurtle turtle;
-        private State gameStatus = State.Running;
-
-        private enum State
-        {
-            Running,
-            FoundExit,
-            HitMine,
-        }
-
-        public async Task Setup(StreamReader inputGameSettings)
+        public override async Task Setup(StreamReader inputGameSettings)
         {
             var boardSize = (await inputGameSettings.ReadLineAsync())?.Split(',');
-            this.gameBoard = new GameBoard(int.Parse(boardSize[0]), int.Parse(boardSize[1]));
+            this.GameBoard = new GameBoard(int.Parse(boardSize[0]), int.Parse(boardSize[1]));
 
             var turtleLocation = (await inputGameSettings.ReadLineAsync())?.Split(',');
-            this.turtle = new Turtle(int.Parse(turtleLocation[0]), int.Parse(turtleLocation[1]), turtleLocation[2]);
+            this.Turtle = new Turtle(int.Parse(turtleLocation[0]), int.Parse(turtleLocation[1]), turtleLocation[2]);
 
             string readLine;
             while ((readLine = await inputGameSettings.ReadLineAsync()) != null)
@@ -42,7 +31,7 @@ namespace Turtle.GameManagement
                         case "m":
                             try
                             {
-                                this.gameBoard.AddGameObject(new Mine(new Vector2(locX, locY)));
+                                this.GameBoard.AddGameObject(new Mine(new Vector2(locX, locY)));
                             }
                             catch (OutOfBoardException exception)
                             {
@@ -55,7 +44,7 @@ namespace Turtle.GameManagement
                         case "e":
                             try
                             {
-                                this.gameBoard.AddGameObject(new Exit(new Vector2(locX, locY)));
+                                this.GameBoard.AddGameObject(new Exit(new Vector2(locX, locY)));
                             }
                             catch (OutOfBoardException exception)
                             {
@@ -78,7 +67,7 @@ namespace Turtle.GameManagement
             inputGameSettings.Close();
         }
 
-        public async Task GameLoop(StreamReader inputMoves)
+        public override async Task GameLoop(StreamReader inputMoves)
         {
             try
             {
@@ -87,24 +76,24 @@ namespace Turtle.GameManagement
                 {
                     if (readLine == "m")
                     {
-                        this.turtle.Move();
+                        this.Turtle.Move();
 
-                        var obj = ValidateTurtleLocation(this.turtle, this.gameBoard);
+                        var obj = ValidateTurtleLocation(this.Turtle, this.GameBoard);
 
                         if (obj is Mine)
                         {
-                            this.gameStatus = State.HitMine;
+                            this.GameStatus = State.HitMine;
                             break;
                         }
                         else if (obj is Exit)
                         {
-                            this.gameStatus = State.FoundExit;
+                            this.GameStatus = State.FoundExit;
                             break;
                         }
                     }
                     else if (readLine == "r")
                     {
-                        this.turtle.Rotate();
+                        this.Turtle.Rotate();
                     }
                     else
                     {
@@ -125,7 +114,7 @@ namespace Turtle.GameManagement
                 inputMoves.Close();
             }
 
-            switch (this.gameStatus)
+            switch (this.GameStatus)
             {
                 case State.Running:
                     Console.WriteLine("Turtle did not manage to escape, still in danger!");

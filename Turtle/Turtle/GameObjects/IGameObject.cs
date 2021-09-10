@@ -2,6 +2,8 @@ namespace Turtle.GameObjects
 {
     public interface IGameObject
     {
-        public IVector2 Location { get; set; }
+        IVector2 Location { get; set; }
+
+        char DrawCharacter();
     }
 }

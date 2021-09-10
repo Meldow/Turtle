@@ -7,5 +7,7 @@ namespace Turtle.GameObjects
         protected GameObject(int x, int y) => this.Location = new Vector2(x, y);
 
         protected GameObject(IVector2 location) => this.Location = location;
+
+        public abstract char DrawCharacter();
     }
 }
