@@ -92,6 +92,7 @@ namespace Turtle.GameManagement
             {
                 this.Turtle.Apples += 1;
                 this.GameBoard.RemoveGameObject(obj.Location);
+                this.Draw();
             }
 
             return false;

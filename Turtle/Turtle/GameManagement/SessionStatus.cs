@@ -48,7 +48,7 @@ namespace Turtle.GameManagement
 
         public static void Draw()
         {
-            Console.WriteLine("Game session status");
+            Console.WriteLine("\n\nGaming session status");
             Console.WriteLine($"Total escapes: {escapes}");
             Console.WriteLine($"Escape Spree: {escapesSpree}");
             Console.WriteLine($"Total mines deaths: {minesDeaths}");
