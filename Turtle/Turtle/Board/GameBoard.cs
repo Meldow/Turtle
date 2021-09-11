@@ -1,7 +1,6 @@
 namespace Turtle.Board
 {
     using System;
-    using System.Collections.Generic;
     using Turtle.Exceptions;
     using Turtle.GameObjects;
 
@@ -25,7 +24,8 @@ namespace Turtle.Board
                 || gameObject.Location.Y < 0
                 || gameObject.Location.Y > this.YSize)
             {
-                throw new OutOfBoardException("Trying to add a GameObject out of the board.", gameObject.Location, gameObject);
+                throw new OutOfBoardException("Trying to add a GameObject out of the board.", gameObject.Location,
+                    gameObject);
             }
 
             this.Tiles[gameObject.Location.X, gameObject.Location.Y] = gameObject;

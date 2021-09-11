@@ -24,7 +24,7 @@ namespace Turtle.GameManagement
 
         public abstract Task GameLoop(StreamReader inputMoves);
 
-        protected virtual async Task PopulateBoardFromGameSettings(StreamReader inputGameSettings)
+        protected virtual async Task PopulateBoard(StreamReader inputGameSettings)
         {
             string readLine;
             while ((readLine = await inputGameSettings.ReadLineAsync()) != null)
@@ -64,7 +64,8 @@ namespace Turtle.GameManagement
                             break;
 
                         default:
-                            throw new UnexpectedInputException("Unexpected object input, only 'm' and 'e' are acceptable.", readLine);
+                            throw new UnexpectedInputException(
+                                "Unexpected object input, only 'm' and 'e' are acceptable.", readLine);
                     }
                 }
                 catch (UnexpectedInputException exception)
@@ -77,7 +78,8 @@ namespace Turtle.GameManagement
         protected async Task CreateTurtle(StreamReader inputGameSettings)
         {
             var turtleLocation = (await inputGameSettings.ReadLineAsync())?.Split(',');
-            this.Turtle = new Turtle(int.Parse(turtleLocation[0]), int.Parse(turtleLocation[1]), turtleLocation[2]);
+            var turtleLocationVec2 = new Vector2(int.Parse(turtleLocation[0]), int.Parse(turtleLocation[1]));
+            this.Turtle = new Turtle(turtleLocationVec2, turtleLocation[2]);
         }
 
         protected async Task CreateGameBoard(StreamReader inputGameSettings)
@@ -86,7 +88,7 @@ namespace Turtle.GameManagement
             this.GameBoard = new GameBoard(int.Parse(boardSize[0]), int.Parse(boardSize[1]));
         }
 
-        protected static IGameObject ValidateTurtleLocation(ITurtle turtle, IGameBoard gameBoard)
+        protected IGameObject ValidateTurtleLocation(ITurtle turtle, IGameBoard gameBoard)
         {
             if (turtle.Location.X < 0
                 || turtle.Location.X > gameBoard.XSize
@@ -118,6 +120,33 @@ namespace Turtle.GameManagement
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
+            }
+        }
+
+        protected static void AddEmptyTiles(IGameBoard gameBoard)
+        {
+            for (var x = 0; x <= gameBoard.XSize; x++)
+            {
+                for (var y = 0; y <= gameBoard.YSize; y++)
+                {
+                    gameBoard.Tiles[x, y] ??= new Empty(new Vector2(x, y));
+                }
+            }
+        }
+
+        protected void MoveTurtle()
+        {
+            this.Turtle.Move();
+
+            var obj = this.ValidateTurtleLocation(this.Turtle, this.GameBoard);
+
+            if (obj is Mine)
+            {
+                this.GameStatus = State.HitMine;
+            }
+            else if (obj is Exit)
+            {
+                this.GameStatus = State.FoundExit;
             }
         }
     }

@@ -5,7 +5,6 @@ namespace Turtle.GameManagement
     using System.Text;
     using System.Threading;
     using System.Threading.Tasks;
-    using Turtle.Board;
     using Turtle.Exceptions;
     using Turtle.GameObjects;
 
@@ -15,7 +14,7 @@ namespace Turtle.GameManagement
         {
             await this.CreateGameBoard(inputGameSettings);
             await this.CreateTurtle(inputGameSettings);
-            await this.PopulateBoardFromGameSettings(inputGameSettings);
+            await this.PopulateBoard(inputGameSettings);
             AddEmptyTiles(this.GameBoard);
         }
 
@@ -28,20 +27,7 @@ namespace Turtle.GameManagement
                 {
                     if (readLine == "m")
                     {
-                        this.Turtle.Move();
-
-                        var obj = ValidateTurtleLocation(this.Turtle, this.GameBoard);
-
-                        if (obj is Mine)
-                        {
-                            this.GameStatus = State.HitMine;
-                            break;
-                        }
-                        else if (obj is Exit)
-                        {
-                            this.GameStatus = State.FoundExit;
-                            break;
-                        }
+                        this.MoveTurtle();
                     }
                     else if (readLine == "r")
                     {
@@ -49,7 +35,9 @@ namespace Turtle.GameManagement
                     }
                     else
                     {
-                        throw new UnexpectedInputException("Unexpected move input, only 'm' and 'r' are acceptable.", readLine);
+                        throw new UnexpectedInputException(
+                            "Unexpected move input, only 'm' and 'r' are acceptable.",
+                            readLine);
                     }
 
                     this.Draw();
@@ -95,17 +83,6 @@ namespace Turtle.GameManagement
             }
 
             Console.WriteLine(strBuilder);
-        }
-
-        private static void AddEmptyTiles(IGameBoard gameBoard)
-        {
-            for (var x = 0; x <= gameBoard.XSize; x++)
-            {
-                for (var y = 0; y <= gameBoard.YSize; y++)
-                {
-                    gameBoard.Tiles[x, y] ??= new Empty(x, y);
-                }
-            }
         }
     }
 }

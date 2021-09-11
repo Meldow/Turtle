@@ -13,18 +13,11 @@ namespace Turtle.GameManagement
         {
             await this.CreateGameBoard(inputGameSettings);
             await this.CreateTurtle(inputGameSettings);
-            await this.PopulateBoardFromGameSettings(inputGameSettings);
-
-            for (var x = 0; x <= this.GameBoard.XSize; x++)
-            {
-                for (var y = 0; y <= this.GameBoard.YSize; y++)
-                {
-                    this.GameBoard.Tiles[x, y] ??= new Empty(x, y);
-                }
-            }
+            await this.PopulateBoard(inputGameSettings);
+            AddEmptyTiles(this.GameBoard);
         }
 
-        public override async Task GameLoop(StreamReader inputMoves)
+        public override Task GameLoop(StreamReader inputMoves)
         {
             try
             {
@@ -66,16 +59,9 @@ namespace Turtle.GameManagement
             {
                 Console.WriteLine($"{exception.Message} | Location: [{exception.Location.X},{exception.Location.Y}]");
             }
-            catch (UnexpectedInputException exception)
-            {
-                Console.WriteLine($"{exception.Message} | Input: '{exception.Input}'");
-            }
-            finally
-            {
-                inputMoves.Close();
-            }
 
             this.CheckGameStatus();
+            return Task.CompletedTask;
         }
 
         private bool CheckCollisions()
@@ -96,7 +82,7 @@ namespace Turtle.GameManagement
             return false;
         }
 
-        protected override async Task PopulateBoardFromGameSettings(StreamReader inputGameSettings)
+        protected override async Task PopulateBoard(StreamReader inputGameSettings)
         {
             string readLine;
             while ((readLine = await inputGameSettings.ReadLineAsync()) != null)
@@ -126,7 +112,8 @@ namespace Turtle.GameManagement
                             break;
 
                         default:
-                            throw new UnexpectedInputException("Unexpected object input, only 'm' and 'e' are acceptable.", readLine);
+                            throw new UnexpectedInputException(
+                                "Unexpected object input, only 'm' and 'e' are acceptable.", readLine);
                     }
                 }
                 catch (UnexpectedInputException exception)

@@ -1,6 +1,5 @@
 namespace Turtle.Board
 {
-    using System.Collections.Generic;
     using Turtle.GameObjects;
 
     public interface IGameBoard

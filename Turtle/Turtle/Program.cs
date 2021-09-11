@@ -10,7 +10,7 @@
      * Receives a game-settings with position of all objects
      * Receives a moves with all movements
      * Only returns the final state
-     * 
+     *
      * Advanced
      * Receives a game.settings with position of all objects
      * Receives a moves with all movements
@@ -41,7 +41,8 @@
                         gameManager = new PlayableGameManager();
                         break;
                     default:
-                        Console.WriteLine("Unknown game type. Please use basic (b), advanced (a) or playable (p) as the first argument.");
+                        Console.WriteLine(
+                            "Unknown game type. Please use basic (b), advanced (a) or playable (p) as the first argument.");
                         Environment.Exit(0);
                         break;
                 }
