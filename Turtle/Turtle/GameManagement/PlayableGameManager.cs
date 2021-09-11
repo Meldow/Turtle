@@ -66,17 +66,30 @@ namespace Turtle.GameManagement
 
         private bool CheckCollisions()
         {
-            var obj = ValidateTurtleLocation(this.Turtle, this.GameBoard);
+            var obj = this.GetObjectInTurtleLocation(this.Turtle, this.GameBoard);
 
             if (obj is Mine)
             {
-                this.GameStatus = State.HitMine;
-                return true;
+                if (this.Turtle.Apples == 0)
+                {
+                    this.GameStatus = State.HitMine;
+                    return true;
+                }
+                else
+                {
+                    this.Turtle.Apples -= 1;
+                    this.GameBoard.RemoveGameObject(obj.Location);
+                }
             }
             else if (obj is Exit)
             {
                 this.GameStatus = State.FoundExit;
                 return true;
+            }
+            else if (obj is Apple)
+            {
+                this.Turtle.Apples += 1;
+                this.GameBoard.RemoveGameObject(obj.Location);
             }
 
             return false;
@@ -155,6 +168,7 @@ namespace Turtle.GameManagement
             }
 
             Console.WriteLine(strBuilder);
+            Console.WriteLine($"Apples: {this.Turtle.Apples}");
         }
     }
 }

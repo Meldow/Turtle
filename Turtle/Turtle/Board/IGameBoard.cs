@@ -12,6 +12,8 @@ namespace Turtle.Board
 
         void AddGameObject(IGameObject gameObject);
 
+        void RemoveGameObject(IVector2 location);
+
         IVector2 GetEmptyTile(IVector2 excludedVector = null);
     }
 }

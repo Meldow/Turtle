@@ -31,6 +31,11 @@ namespace Turtle.Board
             this.Tiles[gameObject.Location.X, gameObject.Location.Y] = gameObject;
         }
 
+        public void RemoveGameObject(IVector2 location)
+        {
+            this.Tiles[location.X, location.Y] = new Empty(location);
+        }
+
         public IVector2 GetEmptyTile(IVector2 excludedVector = null)
         {
             var rnd = new Random();

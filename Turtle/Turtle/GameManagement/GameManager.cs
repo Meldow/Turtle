@@ -89,7 +89,7 @@ namespace Turtle.GameManagement
             this.GameBoard = new GameBoard(int.Parse(boardSize[0]), int.Parse(boardSize[1]));
         }
 
-        protected IGameObject ValidateTurtleLocation(ITurtle turtle, IGameBoard gameBoard)
+        protected IGameObject GetObjectInTurtleLocation(ITurtle turtle, IGameBoard gameBoard)
         {
             if (turtle.Location.X < 0
                 || turtle.Location.X > gameBoard.XSize
@@ -139,7 +139,7 @@ namespace Turtle.GameManagement
         {
             this.Turtle.Move();
 
-            var obj = this.ValidateTurtleLocation(this.Turtle, this.GameBoard);
+            var obj = this.GetObjectInTurtleLocation(this.Turtle, this.GameBoard);
 
             if (obj is Mine)
             {

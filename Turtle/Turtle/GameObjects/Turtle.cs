@@ -4,6 +4,8 @@ namespace Turtle.GameObjects
 
     public class Turtle : GameObject, ITurtle
     {
+        public int Apples { get; set; }
+
         private DirectionEnum direction;
 
         public Turtle(IVector2 location, DirectionEnum direction)
