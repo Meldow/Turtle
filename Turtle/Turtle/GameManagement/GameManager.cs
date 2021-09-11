@@ -117,7 +117,7 @@ namespace Turtle.GameManagement
                     break;
                 case State.HitMine:
                     Console.WriteLine("Mine hit!");
-                    SessionStatus.AddMineHit();
+                    SessionStatus.AddMineDeath();
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();

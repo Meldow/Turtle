@@ -73,12 +73,14 @@ namespace Turtle.GameManagement
                 if (this.Turtle.Apples == 0)
                 {
                     this.GameStatus = State.HitMine;
+                    SessionStatus.AddApplesEaten();
                     return true;
                 }
                 else
                 {
                     this.Turtle.Apples -= 1;
                     this.GameBoard.RemoveGameObject(obj.Location);
+                    SessionStatus.AddMinesEaten();
                 }
             }
             else if (obj is Exit)

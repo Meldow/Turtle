@@ -65,8 +65,8 @@
                 movesStreamReader.Close();
 
                 SessionStatus.Draw();
-                Console.WriteLine("Restarting game in 5...");
-                await Task.Delay(5000);
+                Console.WriteLine("Restarting game in 10...");
+                await Task.Delay(10000);
                 Console.Clear();
             }
         }
