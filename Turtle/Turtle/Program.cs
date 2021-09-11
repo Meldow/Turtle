@@ -65,9 +65,17 @@
                 movesStreamReader.Close();
 
                 SessionStatus.Draw();
-                Console.WriteLine("Restarting game in 10...");
-                await Task.Delay(10000);
-                Console.Clear();
+
+                Console.WriteLine("Press 'R' to restart.");
+                while (true)
+                {
+                    var command = Console.ReadKey();
+                    if (command.Key == ConsoleKey.R)
+                    {
+                        Console.Clear();
+                        break;
+                    }
+                }
             }
         }
     }
