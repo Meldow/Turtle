@@ -114,20 +114,7 @@ namespace Turtle.GameManagement
                 inputMoves.Close();
             }
 
-            switch (this.GameStatus)
-            {
-                case State.Running:
-                    Console.WriteLine("Turtle did not manage to escape, still in danger!");
-                    break;
-                case State.FoundExit:
-                    Console.WriteLine("Turtle escaped successfully!");
-                    break;
-                case State.HitMine:
-                    Console.WriteLine("Mine hit!");
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException();
-            }
+            this.CheckGameStatus();
         }
     }
 }

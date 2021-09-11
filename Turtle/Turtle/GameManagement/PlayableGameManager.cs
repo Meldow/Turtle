@@ -34,40 +34,28 @@ namespace Turtle.GameManagement
                 {
                     var command = Console.ReadKey();
 
-                    if (command.Key == ConsoleKey.UpArrow)
+                    switch (command.Key)
                     {
-                        this.Turtle.Rotate(DirectionEnum.North);
-                        this.Turtle.Move();
+                        case ConsoleKey.UpArrow:
+                            this.Turtle.Rotate(DirectionEnum.North);
+                            this.Turtle.Move();
+                            break;
+                        case ConsoleKey.DownArrow:
+                            this.Turtle.Rotate(DirectionEnum.South);
+                            this.Turtle.Move();
+                            break;
+                        case ConsoleKey.LeftArrow:
+                            this.Turtle.Rotate(DirectionEnum.West);
+                            this.Turtle.Move();
+                            break;
+                        case ConsoleKey.RightArrow:
+                            this.Turtle.Rotate(DirectionEnum.East);
+                            this.Turtle.Move();
+                            break;
                     }
 
-                    if (command.Key == ConsoleKey.DownArrow)
+                    if (this.CheckCollisions())
                     {
-                        this.Turtle.Rotate(DirectionEnum.South);
-                        this.Turtle.Move();
-                    }
-
-                    if (command.Key == ConsoleKey.LeftArrow)
-                    {
-                        this.Turtle.Rotate(DirectionEnum.West);
-                        this.Turtle.Move();
-                    }
-
-                    if (command.Key == ConsoleKey.RightArrow)
-                    {
-                        this.Turtle.Rotate(DirectionEnum.East);
-                        this.Turtle.Move();
-                    }
-
-                    var obj = ValidateTurtleLocation(this.Turtle, this.GameBoard);
-
-                    if (obj is Mine)
-                    {
-                        this.GameStatus = State.HitMine;
-                        break;
-                    }
-                    else if (obj is Exit)
-                    {
-                        this.GameStatus = State.FoundExit;
                         break;
                     }
 
@@ -87,20 +75,25 @@ namespace Turtle.GameManagement
                 inputMoves.Close();
             }
 
-            switch (this.GameStatus)
+            this.CheckGameStatus();
+        }
+
+        private bool CheckCollisions()
+        {
+            var obj = ValidateTurtleLocation(this.Turtle, this.GameBoard);
+
+            if (obj is Mine)
             {
-                case State.Running:
-                    Console.WriteLine("Turtle did not manage to escape, still in danger!");
-                    break;
-                case State.FoundExit:
-                    Console.WriteLine("Turtle escaped successfully!");
-                    break;
-                case State.HitMine:
-                    Console.WriteLine("Mine hit!");
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException();
+                this.GameStatus = State.HitMine;
+                return true;
             }
+            else if (obj is Exit)
+            {
+                this.GameStatus = State.FoundExit;
+                return true;
+            }
+
+            return false;
         }
 
         protected override async Task PopulateBoardFromGameSettings(StreamReader inputGameSettings)

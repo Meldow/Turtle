@@ -93,10 +93,32 @@ namespace Turtle.GameManagement
                 || turtle.Location.Y < 0
                 || turtle.Location.Y > gameBoard.YSize)
             {
+                SessionStatus.AddBoardDrop();
                 throw new OutOfBoardException("Invalid move, the Turtle dropped out of the board.", turtle.Location);
             }
 
             return gameBoard.Tiles[turtle.Location.X, turtle.Location.Y];
+        }
+
+        protected void CheckGameStatus()
+        {
+            switch (this.GameStatus)
+            {
+                case State.Running:
+                    Console.WriteLine("Turtle did not manage to escape, still in danger!");
+                    SessionStatus.AddTurtleLost();
+                    break;
+                case State.FoundExit:
+                    Console.WriteLine("Turtle escaped successfully!");
+                    SessionStatus.AddEscape();
+                    break;
+                case State.HitMine:
+                    Console.WriteLine("Mine hit!");
+                    SessionStatus.AddMineHit();
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
         }
     }
 }
