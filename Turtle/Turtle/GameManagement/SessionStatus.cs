@@ -49,13 +49,13 @@ namespace Turtle.GameManagement
         public static void Draw()
         {
             Console.WriteLine("Game session status");
-            Console.WriteLine($"Escapes: {escapes}");
+            Console.WriteLine($"Total escapes: {escapes}");
             Console.WriteLine($"Escape Spree: {escapesSpree}");
-            Console.WriteLine($"Mine deaths: {minesDeaths}");
-            Console.WriteLine($"Mine eaten: {minesEaten}");
-            Console.WriteLine($"Apples eaten: {applesEaten}");
-            Console.WriteLine($"Board drops: {boardDrops}");
-            Console.WriteLine($"Turtles lost in the board: {boardDrops}");
+            Console.WriteLine($"Total mines deaths: {minesDeaths}");
+            Console.WriteLine($"Total mines eaten: {minesEaten}");
+            Console.WriteLine($"Total apples eaten: {applesEaten}");
+            Console.WriteLine($"Total board drops: {boardDrops}");
+            Console.WriteLine($"Total turtles lost in the board: {boardDrops}");
         }
     }
 }
