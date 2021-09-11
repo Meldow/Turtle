@@ -111,6 +111,15 @@ namespace Turtle.GameManagement
 
                             break;
 
+                        case "a":
+                            for (var i = 0; i < int.Parse(input[1]); i++)
+                            {
+                                var emptyTile = this.GameBoard.GetEmptyTile(this.Turtle.Location);
+                                this.GameBoard.AddGameObject(new Apple(emptyTile));
+                            }
+
+                            break;
+
                         default:
                             throw new UnexpectedInputException(
                                 "Unexpected object input, only 'm' and 'e' are acceptable.", readLine);
