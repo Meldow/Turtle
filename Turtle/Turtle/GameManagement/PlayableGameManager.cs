@@ -47,12 +47,12 @@ namespace Turtle.GameManagement
                             break;
                     }
 
+                    this.Draw();
+
                     if (this.CheckCollisions())
                     {
                         break;
                     }
-
-                    this.Draw();
                 }
             }
             catch (OutOfBoardException exception)

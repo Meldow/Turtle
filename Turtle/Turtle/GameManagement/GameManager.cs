@@ -79,7 +79,8 @@ namespace Turtle.GameManagement
         {
             var turtleLocation = (await inputGameSettings.ReadLineAsync())?.Split(',');
             var turtleLocationVec2 = new Vector2(int.Parse(turtleLocation[0]), int.Parse(turtleLocation[1]));
-            this.Turtle = new Turtle(turtleLocationVec2, turtleLocation[2]);
+            var turtleDirection = Enum.Parse<DirectionEnum>(turtleLocation[2]);
+            this.Turtle = new Turtle(turtleLocationVec2, turtleDirection);
         }
 
         protected async Task CreateGameBoard(StreamReader inputGameSettings)

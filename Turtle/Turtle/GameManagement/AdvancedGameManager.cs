@@ -20,6 +20,8 @@ namespace Turtle.GameManagement
 
         public override async Task GameLoop(StreamReader inputMoves)
         {
+            this.Draw();
+
             try
             {
                 string readLine;
@@ -41,6 +43,7 @@ namespace Turtle.GameManagement
                     }
 
                     this.Draw();
+                    Console.WriteLine($"Input action: {readLine}");
                     Thread.Sleep(1000);
                 }
             }

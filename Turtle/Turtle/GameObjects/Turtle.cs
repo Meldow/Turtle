@@ -6,10 +6,10 @@ namespace Turtle.GameObjects
     {
         private DirectionEnum direction;
 
-        public Turtle(IVector2 location, string direction)
+        public Turtle(IVector2 location, DirectionEnum direction)
         {
             this.Location = location;
-            this.direction = Enum.Parse<DirectionEnum>(direction);
+            this.direction = direction;
         }
 
         public void Move()

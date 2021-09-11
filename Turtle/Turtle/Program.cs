@@ -11,13 +11,22 @@
      * Receives a moves with all movements
      * Only returns the final state
      *
+     * how to run:
+     * dotnet run b game-settings.in moves.in
+     *
      * Advanced
      * Receives a game.settings with position of all objects
      * Receives a moves with all movements
      * Draws a UI with Turtle movements
      *
+     * how to run:
+     * dotnet run a game-settings.in moves.in
+     *
      * Playable
      * Allows you to control the turtle with arrows keys
+     *
+     * how to run:
+     * dotnet run p playable-game-settings.in moves.in
      */
     class Program
     {
@@ -56,8 +65,9 @@
                 movesStreamReader.Close();
 
                 SessionStatus.Draw();
-                Console.WriteLine("Restarting game in 3...");
-                await Task.Delay(3000);
+                Console.WriteLine("Restarting game in 5...");
+                await Task.Delay(5000);
+                Console.Clear();
             }
         }
     }
