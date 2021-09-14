@@ -6,28 +6,25 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <PackageReference Include="StyleCop.Analyzers" Version="1.1.118">
-        <PrivateAssets>all</PrivateAssets>
-        <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-      </PackageReference>
+        <PackageReference Include="StyleCop.Analyzers" Version="1.1.118">
+            <PrivateAssets>all</PrivateAssets>
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
     </ItemGroup>
 
     <ItemGroup>
+        <Content Include="..\..\README.md">
+          <Link>README.md</Link>
+        </Content>
         <Content Include="playable-game-settings.in">
-          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
         </Content>
         <Content Include="game-settings.in">
             <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-        </Content><Content Include="moves.in">
+        </Content>
+        <Content Include="moves.in">
             <CopyToOutputDirectory>Always</CopyToOutputDirectory>
         </Content>
     </ItemGroup>
 
-    <ItemGroup>
-      <Compile Remove="Board.cs" />
-      <Compile Remove="TileType.cs" />
-      <Compile Remove="GameObjects\DirectionEnum.cs" />
-      <Compile Remove="Exceptions\UnexpectedInputGameObject.cs" />
-    </ItemGroup>
-    
 </Project>
